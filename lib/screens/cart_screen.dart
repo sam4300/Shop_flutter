@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
+import 'package:shop/providers/order.dart';
+import 'package:shop/screens/order_screen.dart';
 import 'package:shop/widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
@@ -14,6 +16,16 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Cart'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(OrdersScreen.routeName);
+              },
+              child: Text(
+                'Show Orders',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ))
+        ],
       ),
       body: Column(
         children: [
@@ -38,7 +50,11 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Order>(context, listen: false).addOrder(
+                          cart.items.values.toList(), cart.totalAmount);
+                      cart.clearCart();
+                    },
                     child: Text(
                       'ORDER NOW',
                       style:
@@ -53,10 +69,11 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemBuilder: (ctx, index) => CartSingleItem(
-                id: cart.items.values.toList()[index].id,
+                id: cart.cartItem(index).id,
                 title: cart.items.values.toList()[index].title,
                 price: cart.items.values.toList()[index].price,
                 quantity: cart.items.values.toList()[index].quantity,
+                productId: cart.items.keys.toList()[index],
               ),
               itemCount: cart.itemCount,
             ),
