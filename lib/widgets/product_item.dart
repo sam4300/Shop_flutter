@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
@@ -49,7 +51,17 @@ class ProductItem extends StatelessWidget {
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
                 cart.addItem(
-                    singleProduct.id, singleProduct.title, singleProduct.price);
+                    singleProduct.id!, singleProduct.title, singleProduct.price);
+                Scaffold.of(context).hideCurrentSnackBar();
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 2),
+                    content: Text('Added item to cart'),
+                    action: SnackBarAction(label: 'undo',onPressed: (){
+                      cart.removeSingleItemCart(singleProduct.id!);
+                    },textColor: Colors.white,),
+                  ),
+                );
               },
               color: Theme.of(context).accentColor,
             ),

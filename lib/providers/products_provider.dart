@@ -46,25 +46,58 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  List<Product> get favorites{
+  List<Product> get favorites {
     return _items.where((element) => element.isFavorite).toList();
   }
 
-  Product findById(String id) {
-    return _items.firstWhere((product) => product.id == id);
+  Product findById(String? id) {
+    return _items.firstWhere(
+      (product) => product.id == id,
+    );
   }
 
-  void addProduct() {
+  void addProduct(Product product) {
+    final newProduct = Product(
+      title: product.title,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      id: DateTime.now().toString(),
+      price: product.price,
+    );
+    _items.add(newProduct); //for inserting product at the end of the list
+    // _items.insert(0, product);//for adding products at the beginning of the list
     notifyListeners();
   }
 
-  // void showFavorites() {
-  //   _showFavoritesOnly = true;
-  //   notifyListeners();
-  // }
-  //
-  // void showAll() {
-  //   _showFavoritesOnly = false;
-  //   notifyListeners();
-  // }
+  void updateProduct(String? pId, Product newProduct) {
+    final index = _items.indexWhere((element) => element.id == pId);
+    _items[index] = newProduct;
+    notifyListeners();
+  }
+
+  void deleteProduct(String? id) {
+    _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
+
+// void updateProduct(String id, Product newProduct) {
+//   final prodIndex = _items.indexWhere((element) => element.id == id);
+//   if (prodIndex >= 0) {
+//     _items[prodIndex] = newProduct;
+//     notifyListeners();
+//   }
+//   else {
+//     print('...');
+//   }
+// }
+
+// void showFavorites() {
+//   _showFavoritesOnly = true;
+//   notifyListeners();
+// }
+//
+// void showAll() {
+//   _showFavoritesOnly = false;
+//   notifyListeners();
+// }
 }
