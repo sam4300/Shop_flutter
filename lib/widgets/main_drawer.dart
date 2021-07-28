@@ -7,55 +7,53 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Drawer(
-        child: Column(
-          children: [
-            AppBar(
-              title: Text('Hello Friends'),
+    return Drawer(
+      child: Column(
+        children: [
+          AppBar(
+            title: Text('Hello Friends'),
+          ),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text(
+              'Shop',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
             ),
-            ListTile(
-              leading: Icon(Icons.shop),
+            onTap: () {
+              Navigator.of(context).pushNamed('/');
+            },
+          ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          ListTile(
+              leading: Icon(Icons.payment),
               title: Text(
-                'Shop',
+                'Orders',
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed('/');
-              },
-            ),
-            Divider(
-              color: Colors.black,
-              thickness: 1,
-            ),
-            ListTile(
-                leading: Icon(Icons.payment),
-                title: Text(
-                  'Orders',
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(OrdersScreen.routeName);
-                }),
-            Divider(
-              color: Colors.black,
-              thickness: 1,
-            ),
-            ListTile(
-                leading: Icon(Icons.edit),
-                title: Text(
-                  'Manage Products',
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(UserProducts.routeName);
-                }),
-            Divider(
-              color: Colors.black,
-              thickness: 1,
-            ),
-          ],
-        ),
+                Navigator.of(context).pushNamed(OrdersScreen.routeName);
+              }),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          ListTile(
+              leading: Icon(Icons.edit),
+              title: Text(
+                'Manage Products',
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed(UserProducts.routeName);
+              }),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+        ],
       ),
     );
   }
